@@ -1,0 +1,9 @@
+[tool.ruff]
+line-length = 100
+extend-exclude = ["dbt/financial_pipeline/target", "dbt/financial_pipeline/dbt_packages", ".venv-dbt"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

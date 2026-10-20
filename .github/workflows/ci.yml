@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install -r requirements-dev.txt
+
+      - name: Lint
+        run: ruff check .
+
+      - name: Unit tests
+        run: pytest -v
+
+  dbt-parse:
+    runs-on: ubuntu-latest
+    needs: lint-and-test
+    env:
+      POSTGRES_PASSWORD: ci-placeholder
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install -r requirements-dbt.txt
+
+      - name: Validate dbt project structure (no database needed)
+        working-directory: dbt/financial_pipeline
+        run: dbt parse --profiles-dir ..

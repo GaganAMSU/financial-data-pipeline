@@ -1,0 +1,20 @@
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.venv-dbt/
+venv/
+*.egg-info/
+
+# dbt
+dbt/.user.yml
+dbt/financial_pipeline/target/
+dbt/financial_pipeline/dbt_packages/
+dbt/financial_pipeline/logs/
+
+# Airflow
+logs/
+*.log
+
+.DS_Store

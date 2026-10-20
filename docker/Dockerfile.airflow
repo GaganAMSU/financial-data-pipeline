@@ -1,0 +1,15 @@
+FROM apache/airflow:2.10.3-python3.11
+
+# dbt pins its own versions of click/jinja2/protobuf/etc. that collide with
+# Airflow's, so it gets its own virtualenv instead of living in Airflow's
+# site-packages.
+USER root
+COPY requirements-dbt.txt /requirements-dbt.txt
+RUN python3 -m venv /opt/dbt_venv \
+    && /opt/dbt_venv/bin/pip install --no-cache-dir -r /requirements-dbt.txt
+
+USER airflow
+COPY docker/requirements-airflow.txt /requirements.txt
+RUN pip install --no-cache-dir -r /requirements.txt
+
+ENV PYTHONPATH=/opt/airflow

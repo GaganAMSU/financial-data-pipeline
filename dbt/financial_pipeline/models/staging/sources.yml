@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    tables:
+      - name: stock_prices
+        description: Daily OHLCV rows loaded by the ingestion/fetch_prices.py Airflow task.
+        columns:
+          - name: ticker
+          - name: price_date

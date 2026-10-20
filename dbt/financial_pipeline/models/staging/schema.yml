@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: stg_prices
+    description: Cleaned, cast version of raw.stock_prices.
+    columns:
+      - name: ticker
+        tests:
+          - not_null
+      - name: price_date
+        tests:
+          - not_null
+      - name: close_price
+        tests:
+          - not_null
